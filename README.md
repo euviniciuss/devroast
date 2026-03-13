@@ -1,15 +1,15 @@
 # DevRoast
 
-> Paste your code. Get roasted.
+> Cole seu código. Seja criticado.
 
-DevRoast is a fun web app where developers can submit their code and receive brutally honest feedback powered by AI. Built during **NLW** from [Rocketseat](https://www.rocketseat.com.br).
+DevRoast é um app divertido onde desenvolvedores podem enviar seu código e receber feedbacks honestos powered by AI. Construído durante a **NLW** da [Rocketseat](https://www.rocketseat.com.br).
 
-## Features
+## Funcionalidades
 
-- **Submit Code** - Paste your code and get it roasted
-- **Roast Mode** - Toggle between honest feedback or full roast mode
-- **Shame Leaderboard** - See the worst code submissions ranked by shame
-- **Beautiful Syntax Highlighting** - Powered by Shiki with vesper theme
+- **Enviar Código** - Cole seu código e seja criticado
+- **Roast Mode** - Alterna entre feedback honesto ou modo roast total
+- **Shame Leaderboard** - Veja os piores códigos enviados ranqueados por vergonha
+- **Syntax Highlighting** - Feito com Shiki e tema vesper
 
 ## Tech Stack
 
@@ -18,18 +18,18 @@ DevRoast is a fun web app where developers can submit their code and receive bru
 - Tailwind CSS
 - Shiki (syntax highlighting)
 
-## Getting Started
+## Como começar
 
 ```bash
-# Install dependencies
+# Instalar dependências
 pnpm install
 
-# Start development server
+# Iniciar servidor de desenvolvimento
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the app.
+Abra [http://localhost:3000](http://localhost:3000) para ver o app.
 
-## Contributing
+## Contribuindo
 
-Contributions are welcome! Feel free to open issues and pull requests.
+Contribuições são bem-vindas! Sinta-se livre para abrir issues e pull requests.
