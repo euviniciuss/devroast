@@ -52,6 +52,8 @@ export interface CodeInputProps {
   onLanguageChange?: (language: SupportedLanguage | null) => void;
   className?: string;
   placeholder?: string;
+  onCodePaste?: (language: string, charCount: number) => void;
+  onCodeChange?: (language: string, charCount: number) => void;
 }
 
 function getLanguageExtension(
@@ -72,18 +74,41 @@ export function CodeInput({
   onLanguageChange,
   className,
   placeholder = '// paste your code here...',
+  onCodePaste,
+  onCodeChange,
 }: CodeInputProps) {
   const [selectedLanguage, setSelectedLanguage] =
     useState<SupportedLanguage | null>(language || null);
   const { detectedLanguage, isDetecting, detect } = useLanguageDetection();
 
+  const effectiveLanguage =
+    selectedLanguage || detectedLanguage || 'javascript';
+
   const handleChange = useCallback(
     (val: string) => {
       onChange(val);
       detect(val);
+      onCodeChange?.(effectiveLanguage, val.length);
     },
-    [onChange, detect],
+    [onChange, detect, onCodeChange, effectiveLanguage],
   );
+
+  useEffect(() => {
+    const editorElement = document.querySelector('.cm-content');
+    if (editorElement) {
+      const pasteHandler = (event: Event) => {
+        const clipboardEvent = event as ClipboardEvent;
+        const pastedText = clipboardEvent.clipboardData?.getData('text') || '';
+        if (pastedText && onCodePaste) {
+          onCodePaste(effectiveLanguage, pastedText.length);
+        }
+      };
+      editorElement.addEventListener('paste', pasteHandler);
+      return () => {
+        editorElement.removeEventListener('paste', pasteHandler);
+      };
+    }
+  }, [onCodePaste, effectiveLanguage]);
 
   const handleLanguageChange = useCallback(
     (lang: SupportedLanguage | null) => {
@@ -156,8 +181,6 @@ export function CodeInput({
     }),
     ...getLanguageExtension(selectedLanguage || detectedLanguage),
   ];
-
-  const effectiveLanguage = selectedLanguage || detectedLanguage;
 
   return (
     <div

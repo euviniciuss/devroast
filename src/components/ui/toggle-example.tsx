@@ -8,12 +8,14 @@ export interface ToggleProps {
   variant?: 'primary' | 'secondary';
   pressed?: boolean;
   onPressedChange?: (pressed: boolean) => void;
+  onToggle?: (pressed: boolean) => void;
 }
 
 export function Toggle({
   variant = 'primary',
   pressed,
   onPressedChange,
+  onToggle,
 }: ToggleProps) {
   const [isOn, setIsOn] = useState(pressed ?? false);
 
@@ -21,6 +23,7 @@ export function Toggle({
     const newValue = !isOn;
     setIsOn(newValue);
     onPressedChange?.(newValue);
+    onToggle?.(newValue);
   };
 
   return (

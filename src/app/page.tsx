@@ -6,10 +6,18 @@ import { Button } from '@/components/ui/button';
 import { CodeInput } from '@/components/ui/code-input';
 import { LeaderboardRow } from '@/components/ui/leaderboard-row';
 import { Toggle } from '@/components/ui/toggle-example';
+import { useClarity } from '@/hooks/useClarity';
 
 export default function HomePage() {
   const [roastMode, setRoastMode] = useState(true);
   const [code, setCode] = useState('');
+  const {
+    trackCodeInput,
+    trackCodePaste,
+    trackRoastModeToggle,
+    trackRoastSubmit,
+    trackLeaderboardClick,
+  } = useClarity();
 
   const leaderboardData = [
     {
@@ -55,6 +63,8 @@ export default function HomePage() {
             placeholder="// paste your code here..."
             value={code}
             onChange={(val) => setCode(val)}
+            onCodePaste={trackCodePaste}
+            onCodeChange={trackCodeInput}
           />
         </div>
 
@@ -62,7 +72,11 @@ export default function HomePage() {
         <div className="flex items-center justify-between mb-8 w-full max-w-[780px] mx-auto">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
-              <Toggle pressed={roastMode} onPressedChange={setRoastMode} />
+              <Toggle
+                pressed={roastMode}
+                onPressedChange={setRoastMode}
+                onToggle={trackRoastModeToggle}
+              />
               <span
                 className={
                   roastMode ? 'text-accent-green' : 'text-text-secondary'
@@ -75,7 +89,13 @@ export default function HomePage() {
               {'//'} maximum sarcasm enabled
             </span>
           </div>
-          <Button variant="primary" disabled={!code.trim()}>
+          <Button
+            variant="primary"
+            disabled={!code.trim()}
+            onClick={() =>
+              trackRoastSubmit('javascript', code.length, roastMode)
+            }
+          >
             $ roast_my_code
           </Button>
         </div>
@@ -98,7 +118,10 @@ export default function HomePage() {
               <span className="text-accent-green">{'//'}</span>
               <span className="text-foreground">shame_leaderboard</span>
             </h2>
-            <Link href="/leaderboard">
+            <Link
+              href="/leaderboard"
+              onClick={() => trackLeaderboardClick('/')}
+            >
               <Button variant="ghost" size="sm">
                 $ view_all &gt;&gt;
               </Button>
@@ -126,7 +149,11 @@ export default function HomePage() {
 
           <div className="font-mono text-xs text-text-tertiary text-center py-4">
             showing top 3 of 2,847 ·{' '}
-            <Link href="/leaderboard" className="hover:underline">
+            <Link
+              href="/leaderboard"
+              className="hover:underline"
+              onClick={() => trackLeaderboardClick('/')}
+            >
               view full leaderboard &gt;&gt;
             </Link>
           </div>
