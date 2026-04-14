@@ -52,10 +52,9 @@ export default function HomePage() {
         {/* Code Input */}
         <div className="mb-6">
           <CodeInput
-            rows={15}
             placeholder="// paste your code here..."
             value={code}
-            onChange={(e) => setCode(e.target.value)}
+            onChange={(val) => setCode(val)}
           />
         </div>
 
